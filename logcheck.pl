@@ -8,7 +8,7 @@ $mode="run";
 sub head() {
 	print "\n";
 	print "-----------------------------\n";
-	print "This is logcheck.pl V1.0.2\n";
+	print "This is logcheck.pl V1.0.3\n";
 	print "http://peters-webcorner.de\n";
 	print "project hosted on origo\n";
 	print "http://logcheck.origo.ethz.ch\n";
@@ -167,6 +167,8 @@ foreach $thisfile (@logfiles) {
 				print MAIL "Subject: ($thisfile) violation report $Jetztzeit\n\n\n";
 				print MAIL $outtext;
 				close(MAIL);
+				$command="\/usr\/bin\/logger -p warn logcheckprint";
+                system($command);
 			}
 		} else {
 			if($mode eq "debug") {

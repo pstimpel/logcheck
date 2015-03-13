@@ -10,3 +10,7 @@
 # in normal textlines without regex you will need to mask characters like \ or .
 #
 
+#Keep this is any case
+logcheckprint
+
+#and add your phrases below

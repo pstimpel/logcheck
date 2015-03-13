@@ -1,5 +1,9 @@
 logcheck.pl
 -------------------
+V 1.0.3
+- adds a remark to logfiles if violations against the whitelist were found
+- this remark was added to the whitelist ("logcheckprint")
+
 
 V 1.0.2
 - minor changes within debug mode, mail will not become sent in this mode anymore
