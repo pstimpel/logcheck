@@ -1,0 +1,15 @@
+logcheck.pl
+-------------------
+
+V 1.0.2
+- minor changes within debug mode, mail will not become sent in this mode anymore
+- described regular expressions and their usage
+
+
+V 1.0.1
+- fixed mail addressing
+
+
+V 1.0.0
+- initial release
+

@@ -1,0 +1,6 @@
+# full paths to logfiles where to parse
+# example
+# "/the/path/to/the/first/logfile"
+# you can place as many logfile paths here as you want
+#
+

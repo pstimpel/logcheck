@@ -1,0 +1,12 @@
+# ignore entries that match, match is when part of whitelisted string is in actual parsed line of logfile
+#
+# examples:
+# "this entry" 
+# would match to lines containing "this entry", but not to lines containing "this is an entry"
+# to match this you will need regular expressions like
+# "this(.)*entry"
+# this matches to both examples...
+# BE CAREFIL WHEN USING REGEX, OFTEN YOU MAY COVER MORE THAN EXPECTED!!
+# in normal textlines without regex you will need to mask characters like \ or .
+#
+

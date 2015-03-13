@@ -1,0 +1,66 @@
+Logcheck Installation
+=====================
+
+Extract the file logcheck-x.x.x.tar.gz by using command
+
+	tar -xvzf logcheck-x.x.x.tar.gz
+
+Change to the created directory
+	
+	cd logcheck-x.x.x/
+
+and edit files logcheck.whitelist and logcheck.logfiles.
+
+
+logcheck.conf
+-------------
+
+Please change parameters in logcheck.conf. 
+Check twice for correct mail settings!
+
+
+logcheck.whitelist
+------------------
+
+Contains a list of phrases to ignore as "ok". Each single 
+line you place here will be ignored when parsing the 
+logfiles.
+A line can also be a regular expression, please look into 
+the logfiles.whitelist for more information.
+
+
+logcheck.logfiles
+-----------------
+
+Contains the path to the logfiles which should be
+parsed by logcheck.pl. Each line represents one
+logfile with full path. When running as cron don't 
+use relative paths!
+
+
+checking installation
+---------------------
+
+Run the command
+	
+	/path/to/logcheck.pl debug
+
+to check your installation. Emails will not become sent 
+in debug mode.
+
+
+installing a cronjob
+--------------------
+
+Use command
+	
+	crontab -e
+
+and put a line similar to the follwing into it:
+
+	*/10 * * * * /path/to/logcheck.pl
+
+Thats it...
+
+
+
