@@ -20,11 +20,19 @@
 require 'logcheck.conf';
 $mode="run";
 
+use File::Basename;
+use File::Spec;
+$dirname = File::Spec->rel2abs(dirname(__FILE__));
+
+$file_pidfile = $dirname."/logcheck.pid";
+
+$file_whitelist = $dirname."/".$file_whitelist;
+$file_logfilelist = $dirname."/".$file_logfilelist;
 
 sub head() {
 	print "\n";
 	print "-----------------------------\n";
-	print "This is logcheck.pl V1.0.4\n";
+	print "This is logcheck.pl V1.0.5\n";
 	print "https://peters-webcorner.de\n";
 	print "project hosted on github\n";
 	print "https://github.com/pstimpel/logcheck\n\n";
@@ -35,12 +43,21 @@ sub head() {
 	print "-----------------------------\n\n";
 }
 
-if (($ARGV[0] ne "") && ($ARGV[0] ne "debug") && ($ARGV[0] ne "-l")) {
+if (($ARGV[0] ne "") && ($ARGV[0] ne "debug") && ($ARGV[0] ne "-l") && ($ARGV[0] ne "-r") && ($ARGV[0] ne "-d")) {
 	head();
 	print "Parameters:\n";
 	print "logcheck.pl         normal run, parse logfiles and fire email if needed\n";
 	print "logcheck.pl debug   prevents script from sending mail\n";
+	print "logcheck.pl -d      prevents script from sending mail\n";
 	print "logcheck.pl -l      prints license to console\n";
+	print "logcheck.pl -p      removes existing pid-file with no further checks\n";
+	print "logcheck.pl -h      this screen\n";
+	print "PID: ".$$." \n";
+	print "DIR: ".$dirname."\n";
+	getpidfilecontent();
+	if($pidstring ne "unknown") {
+		print "!!! PID-file existing, created by process ".$pidstring." !!!\n";
+	}
 	exit 0;
 
 }
@@ -52,7 +69,14 @@ if ($ARGV[0] eq "-l") {
 	exit 0;
 }
 
-if ($ARGV[0] eq "debug") {
+if ($ARGV[0] eq "-r") {
+	head();
+	unlink($file_pidfile);
+	print "done...\n";
+	exit 0;
+}
+
+if ($ARGV[0] eq "debug" || $ARGV[0] eq "-d") {
 	head();
 	print "debug mode on...\n";
 	$mode="debug";
@@ -141,6 +165,34 @@ else
 	exit 1;
 }
 
+if (-e $file_pidfile) {
+	if($mode eq "debug") {
+		print "There is a pid-file already, ".$file_pidfile.", abort execution\n";
+		exit 1;
+	} else {
+		getpidfilecontent();
+		$psstring = `ps fax`;
+		$Jetztwert = time();
+		$Jetztzeit = localtime($Jetztwert);
+		$mailer = '/usr/sbin/sendmail';
+		$Sender = $senderaddress;
+		open(MAIL, "|$mailer -t") || die "Can't open $mailer!\n";
+		print MAIL "To: ".$emailaddress."\n";
+		print MAIL "Subject: Logs NOT CHECKED report $Jetztzeit\n\n\n";
+		print MAIL "There is a pid-file already at ".$file_pidfile.", and the execution of logcheck was aborted!\n\nRemove the pid-file, but make sure logcheck is not running anymore. See output of ps fax below\n\n";
+		print MAIL "Pid of this (the aborted process) is: ".$$."\n";
+		print MAIL "Pid of blocking process is: ".$pidstring."\n\n";
+		
+		print MAIL $psstring."\n\n";
+		close(MAIL);
+		exit 1;
+	}
+}
+
+open(ADR, ">$file_pidfile");
+print ADR $$;
+close(ADR);
+
 
 foreach $thisfile (@logfiles) {
 	$outtext="";
@@ -218,6 +270,9 @@ foreach $thisfile (@logfiles) {
 		print STDERR "logfile $thisfile not found...ignoring\n";
 	}	
 }
+
+unlink($file_pidfile);
+
 exit 0;
 
 
@@ -251,4 +306,18 @@ sub check() {
 	close(LOG);
 }
 
-
+sub getpidfilecontent() {
+	$pidstring="unknown";
+	open(ADR, "<$file_pidfile");
+	while(<ADR>)
+	{
+		chop($_);
+		if(length($_) > 1) {
+			if (substr($_,0,1) ne "#") 
+			{
+				$pidstring = $_;
+			}	
+		}
+	}
+	close(ADR);
+}

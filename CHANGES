@@ -1,5 +1,9 @@
 logcheck.pl
 -------------------
+V 1.0.5
+- pid file handling, no logchecks if pid file exists
+- removed path to logcheck setting from configuration, dynamic path recognition instead
+
 V 1.0.4
 - changed license from GPL V2 to GPL V3, license file changed
 - some cleaner output of help, contact details changed
