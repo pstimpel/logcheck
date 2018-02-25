@@ -8,7 +8,7 @@
 # this matches to both examples...
 # BE CAREFIL WHEN USING REGEX, OFTEN YOU MAY COVER MORE THAN EXPECTED!!
 # in normal textlines without regex you will need to mask characters like \ or .
-#
+# 
 
 #Keep this is any case
 logcheckprint

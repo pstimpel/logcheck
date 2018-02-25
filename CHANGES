@@ -1,5 +1,10 @@
 logcheck.pl
 -------------------
+V 1.0.4
+- changed license from GPL V2 to GPL V3, license file changed
+- some cleaner output of help, contact details changed
+- "-l" parameter introduced to print license file
+
 V 1.0.3
 - adds a remark to logfiles if violations against the whitelist were found
 - this remark was added to the whitelist ("logcheckprint")

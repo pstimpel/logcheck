@@ -1,5 +1,21 @@
 #!/usr/bin/perl
 
+#    Logchecker - perl script to check unix logfiles and notify by email
+#    if entries appear not covered by the whitelist
+#    Copyright (C) long time ago by Peter, peters-webcorner.de
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 require 'logcheck.conf';
 $mode="run";
@@ -8,19 +24,32 @@ $mode="run";
 sub head() {
 	print "\n";
 	print "-----------------------------\n";
-	print "This is logcheck.pl V1.0.3\n";
-	print "http://peters-webcorner.de\n";
-	print "project hosted on origo\n";
-	print "http://logcheck.origo.ethz.ch\n";
+	print "This is logcheck.pl V1.0.4\n";
+	print "https://peters-webcorner.de\n";
+	print "project hosted on github\n";
+	print "https://github.com/pstimpel/logcheck\n\n";
+	print "Logchecker - Copyright (C) long time ago by Peter\n";
+    print "This program comes with ABSOLUTELY NO WARRANTY; for details run `-l'.\n";
+    print "This is free software, and you are welcome to redistribute it\n";
+    print "under certain conditions. Check license for details.\n";
 	print "-----------------------------\n\n";
 }
 
-if (($ARGV[0] ne "") && ($ARGV[0] ne "debug")) {
+if (($ARGV[0] ne "") && ($ARGV[0] ne "debug") && ($ARGV[0] ne "-l")) {
 	head();
-	print "you can use 'logcheck.pl debug' or 'logcheck.pl' without any parameters\n";
-	print "hint: using debug will prevent script from sending mail...\n";
+	print "Parameters:\n";
+	print "logcheck.pl         normal run, parse logfiles and fire email if needed\n";
+	print "logcheck.pl debug   prevents script from sending mail\n";
+	print "logcheck.pl -l      prints license to console\n";
 	exit 0;
 
+}
+
+if ($ARGV[0] eq "-l") {
+	head();
+	print "Content of license\n\n\n";
+	system('cat LICENSE | more');
+	exit 0;
 }
 
 if ($ARGV[0] eq "debug") {
