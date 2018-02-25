@@ -1,4 +1,4 @@
-#Logchecker
+# Logcheck
 
 Perl script for unix/linux systems to report logfile entries not covered by a whitelist.
 
@@ -7,7 +7,7 @@ Releases / Downloads: https://github.com/pstimpel/logcheck/releases
 Install instructions: https://github.com/pstimpel/logcheck/blob/master/INSTALL
 
 
-#License
+# License
 
 Logchecker - perl script to check unix logfiles and notify by email
 if entries appear not covered by the whitelist
