@@ -20,6 +20,22 @@
 require 'logcheck.conf';
 $mode="run";
 
+if (defined($logcheckpath)) {
+
+	print "There was change in the configuration starting from version 1.0.5!\n";
+	print "\n";
+	print '$file_whitelist=$logcheckpath."logcheck.whitelist"; is now'."\n";
+	print '$file_whitelist="logcheck.whitelist";'."\n";
+	print "\n";
+	print '$file_logfiles=$logcheckpath."logcheck.logfiles"; is now'."\n";
+	print '$file_logfilelist="logcheck.logfiles";'."\n";
+	print "\n";
+	print '$logcheckpath="/your/path/"; is now'."\n";
+	print '#$logcheckpath="/your/path/";'."\n";
+	print "\nPlease make these changes before you continue using logcheck.pl\n";
+	exit 1;
+}
+
 use File::Basename;
 use File::Spec;
 $dirname = File::Spec->rel2abs(dirname(__FILE__));
@@ -32,7 +48,7 @@ $file_logfilelist = $dirname."/".$file_logfilelist;
 sub head() {
 	print "\n";
 	print "-----------------------------\n";
-	print "This is logcheck.pl V1.0.5\n";
+	print "This is logcheck.pl V1.0.6\n";
 	print "https://peters-webcorner.de\n";
 	print "project hosted on github\n";
 	print "https://github.com/pstimpel/logcheck\n\n";
