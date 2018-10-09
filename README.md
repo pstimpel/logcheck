@@ -11,7 +11,8 @@ Install instructions: https://github.com/pstimpel/logcheck/blob/master/INSTALL
 
 Logchecker - perl script to check unix logfiles and notify by email
 if entries appear not covered by the whitelist
-Copyright (C) long time ago by Peter, https://peters-webcorner.de
+
+Former Copyright (C) long time ago by Peter, https://peters-webcorner.de - meanwhile GPL3.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
