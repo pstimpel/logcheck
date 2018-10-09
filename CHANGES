@@ -1,5 +1,9 @@
 logcheck.pl
 -------------------
+V 1.0.7
+- get working directory before including config
+
+
 V 1.0.6
 - check, if updated from 1.0.4 or below due changed structure of conf-file
 
