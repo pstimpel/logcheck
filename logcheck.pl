@@ -17,6 +17,10 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use File::Basename;
+use File::Spec;
+$dirname = File::Spec->rel2abs(dirname(__FILE__));
+
 require 'logcheck.conf';
 $mode="run";
 
@@ -36,10 +40,6 @@ if (defined($logcheckpath)) {
 	exit 1;
 }
 
-use File::Basename;
-use File::Spec;
-$dirname = File::Spec->rel2abs(dirname(__FILE__));
-
 $file_pidfile = $dirname."/logcheck.pid";
 
 $file_whitelist = $dirname."/".$file_whitelist;
@@ -48,7 +48,7 @@ $file_logfilelist = $dirname."/".$file_logfilelist;
 sub head() {
 	print "\n";
 	print "-----------------------------\n";
-	print "This is logcheck.pl V1.0.6\n";
+	print "This is logcheck.pl V1.0.7\n";
 	print "https://peters-webcorner.de\n";
 	print "project hosted on github\n";
 	print "https://github.com/pstimpel/logcheck\n\n";
