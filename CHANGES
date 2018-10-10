@@ -1,5 +1,9 @@
 logcheck.pl
 -------------------
+V 1.0.8
+- use pl-files location for including config
+
+
 V 1.0.7
 - get working directory before including config
 

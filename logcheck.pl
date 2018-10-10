@@ -21,7 +21,7 @@ use File::Basename;
 use File::Spec;
 $dirname = File::Spec->rel2abs(dirname(__FILE__));
 
-require 'logcheck.conf';
+require $dirname.'/logcheck.conf';
 $mode="run";
 
 if (defined($logcheckpath)) {
@@ -48,7 +48,7 @@ $file_logfilelist = $dirname."/".$file_logfilelist;
 sub head() {
 	print "\n";
 	print "-----------------------------\n";
-	print "This is logcheck.pl V1.0.7\n";
+	print "This is logcheck.pl V1.0.8\n";
 	print "https://peters-webcorner.de\n";
 	print "project hosted on github\n";
 	print "https://github.com/pstimpel/logcheck\n\n";
