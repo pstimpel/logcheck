@@ -1,5 +1,9 @@
 logcheck.pl
 -------------------
+V 1.0.9
+- Take care of sender address (by jumbo)
+
+
 V 1.0.8
 - use pl-files location for including config
 
