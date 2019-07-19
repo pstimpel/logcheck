@@ -23,6 +23,7 @@ $dirname = File::Spec->rel2abs(dirname(__FILE__));
 
 require $dirname.'/logcheck.conf';
 $mode="run";
+$frompart="";
 
 if (defined($logcheckpath)) {
 
@@ -191,8 +192,11 @@ if (-e $file_pidfile) {
 		$Jetztwert = time();
 		$Jetztzeit = localtime($Jetztwert);
 		$mailer = '/usr/sbin/sendmail';
-		$Sender = $senderaddress;
-		open(MAIL, "|$mailer -t") || die "Can't open $mailer!\n";
+		if (defined($senderaddress)) {
+		$frompart="-f $senderaddress";
+		}
+
+		open(MAIL, "|$mailer -t $frompart") || die "Can't open $mailer!\n";
 		print MAIL "To: ".$emailaddress."\n";
 		print MAIL "Subject: Logs NOT CHECKED report $Jetztzeit\n\n\n";
 		print MAIL "There is a pid-file already at ".$file_pidfile.", and the execution of logcheck was aborted!\n\nRemove the pid-file, but make sure logcheck is not running anymore. See output of ps fax below\n\n";
@@ -258,8 +262,11 @@ foreach $thisfile (@logfiles) {
 				$Jetztwert = time();
 				$Jetztzeit = localtime($Jetztwert);
 				$mailer = '/usr/sbin/sendmail';
-				$Sender = $senderaddress;
-				open(MAIL, "|$mailer -t") || die "Can't open $mailer!\n";
+				if (defined($senderaddress)) {
+				$frompart="-f $senderaddress";
+				}
+
+				open(MAIL, "|$mailer -t $frompart") || die "Can't open $mailer!\n";
 				print MAIL "To: ".$emailaddress."\n";
 				print MAIL "Subject: ($thisfile) violation report $Jetztzeit\n\n\n";
 				print MAIL $outtext;
