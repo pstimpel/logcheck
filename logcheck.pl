@@ -27,7 +27,7 @@ $frompart="";
 
 if (defined($logcheckpath)) {
 
-	print "There was change in the configuration starting from version 1.0.5!\n";
+	print "There was change in the configuration starting from version 1.0.9!\n";
 	print "\n";
 	print '$file_whitelist=$logcheckpath."logcheck.whitelist"; is now'."\n";
 	print '$file_whitelist="logcheck.whitelist";'."\n";
@@ -49,7 +49,7 @@ $file_logfilelist = $dirname."/".$file_logfilelist;
 sub head() {
 	print "\n";
 	print "-----------------------------\n";
-	print "This is logcheck.pl V1.0.8\n";
+	print "This is logcheck.pl V1.0.9\n";
 	print "https://peters-webcorner.de\n";
 	print "project hosted on github\n";
 	print "https://github.com/pstimpel/logcheck\n\n";
@@ -226,6 +226,7 @@ foreach $thisfile (@logfiles) {
 	{
 		$useoffset=0;
 		$thisoffset="";
+		gettimestamplength();
 		if(-e $thisfile.".offset") {
 			if($mode eq "debug") {
 				print "using ".$thisfile.".offset\n";
@@ -298,6 +299,19 @@ unlink($file_pidfile);
 
 exit 0;
 
+sub gettimestamplength() {
+	# is reading the first line and guessing how long is the timestring
+	open (TEMPLOG,"<$thisfile");
+	$firstline = <TEMPLOG>;
+	close (TEMPLOG);
+	$firstline =~/(^.*\d{2}\:\d{2}\:\d{2}.*?\s)/gm;
+	$temptimestring = $1;
+	$lengthtimestring = length($temptimestring)-1;
+	if($mode eq "debug") {
+		print "Following timestamp has been found $temptimestring.\n";
+		print "It is $lengthtimestring characters long.\n";
+	}
+}
 
 sub check() {
 	# checks the logfile itself
@@ -318,8 +332,8 @@ sub check() {
 				$outtext=$outtext.$_;
 			}
 		}	
-		$noffset = substr($_,0,15,);
-		if(substr($_,0,15) eq $offset) {
+		$noffset = substr($_,0,$lengthtimestring,);
+		if(substr($_,0,$lengthtimestring) eq $offset) {
 			$jumpover=0;
 			if($mode eq "debug") {
 				print "offset found\n";	
