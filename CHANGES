@@ -1,5 +1,10 @@
 logcheck.pl
 -------------------
+V 1.1.0
+- Handle timestamps more efficient (by jumbo)
+. remove comma from substr
+
+
 V 1.0.9
 - Take care of sender address (by jumbo)
 
