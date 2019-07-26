@@ -304,12 +304,21 @@ sub gettimestamplength() {
 	open (TEMPLOG,"<$thisfile");
 	$firstline = <TEMPLOG>;
 	close (TEMPLOG);
-	$firstline =~/(^.*\d{2}\:\d{2}\:\d{2}.*?\s)/gm;
-	$temptimestring = $1;
-	$lengthtimestring = length($temptimestring)-1;
-	if($mode eq "debug") {
-		print "Following timestamp has been found $temptimestring.\n";
-		print "It is $lengthtimestring characters long.\n";
+	if($firstline =~/(^.*\d{2}\:\d{2}\:\d{2}.*?\s)/gm)
+	{
+		$temptimestring = $1;
+		$lengthtimestring = length($temptimestring)-1;
+		if($mode eq "debug") {
+			print "Following timestamp has been found $temptimestring.\n";
+			print "It is $lengthtimestring characters long.\n";
+			}
+	}
+	else  
+	{
+		$lengthtimestring=15;
+		if($mode eq "debug") {
+		print "Did not find a timestring used default.\n";
+		}
 	}
 }
 
