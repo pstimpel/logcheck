@@ -226,6 +226,7 @@ foreach $thisfile (@logfiles) {
 	{
 		$useoffset=0;
 		$thisoffset="";
+		gettimestamplength();
 		if(-e $thisfile.".offset") {
 			if($mode eq "debug") {
 				print "using ".$thisfile.".offset\n";
@@ -298,6 +299,28 @@ unlink($file_pidfile);
 
 exit 0;
 
+sub gettimestamplength() {
+	# is reading the first line and guessing how long is the timestring
+	open (TEMPLOG,"<$thisfile");
+	$firstline = <TEMPLOG>;
+	close (TEMPLOG);
+	if($firstline =~/(^.*\d{2}\:\d{2}\:\d{2}.*?\s)/gm)
+	{
+		$temptimestring = $1;
+		$lengthtimestring = length($temptimestring)-1;
+		if($mode eq "debug") {
+			print "Following timestamp has been found $temptimestring.\n";
+			print "It is $lengthtimestring characters long.\n";
+			}
+	}
+	else  
+	{
+		$lengthtimestring=15;
+		if($mode eq "debug") {
+		print "Did not find a timestring used default.\n";
+		}
+	}
+}
 
 sub check() {
 	# checks the logfile itself
@@ -318,8 +341,8 @@ sub check() {
 				$outtext=$outtext.$_;
 			}
 		}	
-		$noffset = substr($_,0,15,);
-		if(substr($_,0,15) eq $offset) {
+		$noffset = substr($_,0,$lengthtimestring,);
+		if(substr($_,0,$lengthtimestring) eq $offset) {
 			$jumpover=0;
 			if($mode eq "debug") {
 				print "offset found\n";	
