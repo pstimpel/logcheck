@@ -27,7 +27,7 @@ $frompart="";
 
 if (defined($logcheckpath)) {
 
-	print "There was change in the configuration starting from version 1.0.9!\n";
+	print "There was change in the configuration starting from version 1.1.0!\n";
 	print "\n";
 	print '$file_whitelist=$logcheckpath."logcheck.whitelist"; is now'."\n";
 	print '$file_whitelist="logcheck.whitelist";'."\n";
@@ -49,7 +49,7 @@ $file_logfilelist = $dirname."/".$file_logfilelist;
 sub head() {
 	print "\n";
 	print "-----------------------------\n";
-	print "This is logcheck.pl V1.0.9\n";
+	print "This is logcheck.pl V1.1.0\n";
 	print "https://peters-webcorner.de\n";
 	print "project hosted on github\n";
 	print "https://github.com/pstimpel/logcheck\n\n";
@@ -341,7 +341,7 @@ sub check() {
 				$outtext=$outtext.$_;
 			}
 		}	
-		$noffset = substr($_,0,$lengthtimestring,);
+		$noffset = substr($_,0,$lengthtimestring);
 		if(substr($_,0,$lengthtimestring) eq $offset) {
 			$jumpover=0;
 			if($mode eq "debug") {
